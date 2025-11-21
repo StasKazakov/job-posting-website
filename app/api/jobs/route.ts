@@ -5,9 +5,10 @@ import { prisma } from "@/lib/prisma";
 export async function POST(request: Request) {
     const session = await auth()
 
-    if(!session?.user || session.user.id) {
+    if (!session || !session.user) {
         return NextResponse.redirect(new URL("/auth/signin", request.url));
     }
+
 
     try {
         const data = await request.json()
